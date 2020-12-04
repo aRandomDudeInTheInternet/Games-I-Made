@@ -76,6 +76,9 @@ while run:
         enemy.y -= 7
     if keys[pygame.K_q]:
         run = False
+    if keys[pygame.K_RSHIFT]:
+        player_score += 1
+    
     # Special Conditionals
     if start:
         ball_animation()
@@ -93,12 +96,12 @@ while run:
         win = "{} Is Winning!".format(Enemy)
     if player_score == enemy_score:
         win = "It's currently a tie!"
-    if player_score == 5:
+    if player_score >= 5:
         win = "{} won!\nPlay Again?".format(Player)
         if keys[pygame.K_SPACE]:
             enemy_score = 0
             player_score = 0
-    if enemy_score == 5:
+    if enemy_score >= 5:
         win = "{} won! \nPlay Again?".format(Enemy)
         if keys[pygame.K_SPACE]:
             enemy_score = 0
@@ -110,7 +113,9 @@ while run:
         player_score = 0
         pygame.time.delay(5000)
         run = False
-
+    if seconds == 200:
+        timer = game_font.render(f"{seconds}", False, (255, 200, 200))
+        window.blit(timer, (screen_width / 2 - 15, 100))
     character_bordering()
     # time shit
     pygame.display.update()
@@ -129,8 +134,9 @@ while run:
     window.blit(player_text, (screen_width / 2 + 100, 10))
     win_text = game_font.render(f"{win}", False, (200, 200, 200))
     window.blit(win_text, (text_x, text_y))
-    timer = game_font.render(f"{seconds}", False, (200, 200, 200))
-    window.blit(timer, (screen_width / 2 - 15, 100))
+    if not seconds == 200:
+        timer = game_font.render(f"{seconds}", False, (200, 200, 200))
+        window.blit(timer, (screen_width / 2 - 15, 100))
     disclaimer = rules.render("If the timer reaches 210 You both Lose", False, (200, 200, 200))
     window.blit(disclaimer, (screen_width / 2 - 150, 600))
         
